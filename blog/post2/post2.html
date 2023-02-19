@@ -1,0 +1,200 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Jason's Blog</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<meta name="robots" content="noindex, nofollow">
+		<link rel="stylesheet" href="../../assets/css/main.css" />
+	</head>
+	<body class="subpage">
+		<div id="page-wrapper">
+
+			<!-- Header -->
+				<section id="header">
+					<div class="container">
+						<div class="row">
+							<div class="col-12">
+
+								<!-- Logo -->
+									<h1><a href="../../index.html" id="logo">Jason Lombino</a></h1>
+
+								<!-- Nav -->
+									<nav id="nav">
+										<a href="https://github.com/jlombino/">Github Profile</a>
+										<a href="../../index.html">Home</a>
+									</nav>
+
+							</div>
+						</div>
+					</div>
+				</section>
+
+			<!-- Content -->
+				<section id="content">
+					<div class="container">
+						<div class="row">
+							<div class="col-3 col-12-medium">
+
+								<!-- Sidebar -->
+									<section>
+										<header>
+											<h2>All Posts</h2>
+										</header>
+										<ul class="link-list">
+											<li><a href="../post1/post1.html">Jason's First Blog Post<br>
+												<img src="../post1/img_preview.jpg" width="80%"></a></li>
+											<li><a href="../post2/post2.html">Jason's First Data Science Project<br>
+												<img src="../post2/img_preview.jpg" width="80%"></a></li>
+											<li><a href="../post3/post3.html">Introduction to SQL<br>
+												<img src="../post3/img_preview.jpg" width="80%"></a></li>
+										</ul>
+									</section>
+
+							</div>
+							<div class="col-9 col-12-medium imp-medium">
+
+								<!-- Main Content -->
+									<section>
+										<p>
+											Welcome back! Before we get to the meat of my blog post today, I would like to do some housekeeping.
+											I found some awesome resources while trying to make this website to host my blog posts. First off,&nbsp<a href=https://unsplash.com/>Unsplash</a>
+											is a great place to find images "by the world’s most generous community of photographers". All the images are free to use for whatever purpose
+											you desire, no permission needed. In addition, <a href=https://html5up.net//>HTML5 UP</a> offers amazing free website templates. I am personally
+											using their&nbsp<a href=https://html5up.net/halcyonic/>Halcyonic</a> template for this website, and I love it. Finally, here is the Bentley picture for this post.
+										</p>
+										<center><img src="img_bentley.jpg" alt="Good Boy!" width="80%"></center>
+										<p> 
+											While I originally wanted today's blog to be a tutorial for SQLite, it turns out I need some more practice formatting blocks of code in HTML/CSS. 
+											If that seems interesting to you, please check back in a couple of weeks because I plan to use that idea for my next blog post.
+										</p>
+										<hr>
+										<h3>Movie Industry Analysis Project</h3><br>
+										<p>
+											In the mean time, I would like to spend some time today talking about my <a href=https://github.com/jlombino/dsc-phase-1-project>first project</a> as a data science student.
+											If you clicked that link already, you might be surprised to find that I did ZERO modelling for this project. The goals of this project were data cleaning, exploratory
+											data analysis, and the application of these processes to a real world business problem. My ultimate goal for this project was to generate three actionable recommendations for a new
+											movie studio (Microsoft in this example) to follow when making their first movie. To help with this, I was provided with data sets on movies from a wide range of sources. I decided
+											to focus on the data from&nbsp<a href="https://www.imdb.com/">IMDB</a> and&nbsp<a href="https://www.the-numbers.com/">The Numbers</a> for this analysis because together they
+											contained all of the financial information I needed while also being relatively clean and easy to work with. I selected the following business questions to focus on during
+											my analysis.
+										</p>
+										<ol>
+											<li>Which movie genres perform the best?</li>
+											<li>What is the best time of year to release a movie?</li>
+											<li>What budget should the movie be allocated?</li>
+										</ol>
+										<p>
+											In order to answer these questions, I selected percent return on investment as my primary measure of financial success. Total profit was a close contender though, and I made sure
+											each of my recommendations made sense when considering the total profit for each movie as well. The first step in my analysis was importing, cleaning, and merging the data sets using
+											Pandas. I dropped all movies made before 2000 from my data set because they were not relevant in an analysis of the modern movie industry. Cleaning the data involved formatting the 
+											financial information by removing punctuation, and extracting the relevant release timing information using a custom function. Finally, I calculated the total
+											profit and return on investment for each movie using its budget and worldwide gross.
+										</p>
+										<hr>
+										<h3>Genre Analysis</h3><br>
+										<p>
+											In order to answer the first question, I grouped the movies by their genre. Any movie could be present in multiple genre categories. Using these genre groups, I made a boxplot
+											showing return on investment for each genre. This was sorted by the return on investment of the median movie in each group. If you are unfamiliar with boxplots, the most important
+											 takeaway is the line in the middle of the colored box which signifies the median movie in each category.
+										</p>
+										<center><img src="top_genre_roi.png" width="80%"></center>
+										<p>
+											Genre definitely proved to be a significant factor in movie performance. The median animation movie performed over three times as well on return on investment than the median 
+											movie overall. The top three genres turned out to be animation, advenutre, and Sci-Fi.
+										</p>
+										<hr>
+										<h3>Release Timing Analysis</h3><br>
+										<p>
+											The next question I focused on was release timing. I once again began by grouping the movies based on release season. Using these groups, I made the following 
+											boxplots. 
+										</p>
+										<center><img src="season_roi.png" width="80%"></center>
+										<p>
+											While definitely less significant than genre, the timing of a movie's release definitely played a role in its financial success. Summer proved to be the best time to release a movie.
+											The median summer movie performed about 60% better than the median movie overall.
+										</p>
+										<center><img src="month_roi.png" width="80%"></center>
+										<p>
+											July was the best month to release a movie. The median movie released in July performed nearly twice as well on return on investment than the median overall movie.
+										</p>
+										<hr>
+										<h3>Budget Analysis</h3><br>
+										<p>
+											Finally, I decided to look into the impact of movie budget on return on investment. After grouping the movies by their budget, I made the following boxplot showing the return on
+											investment for movies in each budget group.
+										</p>
+										<center><img src="budget_roi.png" width="80%"></center>
+										<p>
+											It initially appears that having as large a budget as possible is beneficial to a movie's success. The median movie in the $200+ million budget category has over a 200% return on
+											investment compared to the median movie overall's mere 55% return. However, due to a lack of data in the highest budget group, I only recommend providing a budget between $120 million 
+											and $200 million. The following graph should give you an idea of what I mean.
+										</p>
+										<center><img src="budget_hist.png" width="80%"></center>
+										<p>
+											Only 41 of the over 4000 movies present in my data set had a budget over $200 million, and the range of budgets these movies had was massive. There is simply not enough data in this 
+											range for me to confidently say having a budget over $200 million is beneficial. 
+										</p>
+										<hr>
+										<h3>Conclusions</h3><br>
+										<p>
+											Based on my analysis, I provided the following answers to my business questions:	
+										</p>
+										<ol>
+											<li>Which movie genres perform the best?</li>
+											<ul><li>Animation, Advenutre, and Sci-Fi movies perform best.</li></ul>
+											<li>What is the best time of year to release a movie?</li>
+											<ul><li>July is the best month to release a movie, but definitely aim for a Summer release.</li></ul>
+											<li>What budget should the movie be allocated?</li>
+											<ul><li>The movie should have a budget between $120 million and $200 million.</li></ul>
+										</ol>
+										<p>
+											I also recommended Microsoft utilize one of the following intellectual properties for their first movie. I selected these becuase their genres match the top genres from my analysis.
+										</p>
+										<center><img src="IntelProp.png" width="80%"></center>
+										<hr>
+										<h3>Future Considerations</h3><br>
+										<p>
+											I definitely plan to revisit this project in the future once I have strengthened my data science skills. Some areas I personally believe I can improve on the most include:
+										</p>
+										<ol>
+											<li>Visualizations: </li>
+											<ul>
+												<li>Boxplots are not the most intuitive visualizations and should be avoided when presenting to a non-technical audience.</li>
+												<li>I should have included an lm plot to better showcase the relationship between budget and ROI.</li>
+											</ul>
+											<li>Jupyter Notebook:</li>
+											<ul>
+												<li>There must be a better approach to separating the movies by genre than what I implemented.</li>
+												<li>My code should adhere to PEP 8 or some other standard more closely.</li>
+												<li>#Comments.</li>
+											</ul>
+										</ol>
+										<p>
+											Despite some of these shorcomings, I believe this was a very successful project. I definitely learned a lot about exploratory data analysis, data cleaning, and addressing
+											business problems. I am very much looking forward to modelling in the future. I hope you join me again next time for my SQLite tutorial.
+										</p>
+										
+									</section>
+
+							</div>
+						</div>
+					</div>
+				</section>
+
+			<!-- Copyright -->
+				<div id="copyright">
+					&copy; Untitled. All rights reserved. | Design: <a href="http://html5up.net">HTML5 UP</a>
+				</div>
+
+		</div>
+
+		<!-- Scripts -->
+			<script src="../../assets/js/jquery.min.js"></script>
+			<script src="../../assets/js/browser.min.js"></script>
+			<script src="../../assets/js/breakpoints.min.js"></script>
+			<script src="../../assets/js/util.js"></script>
+			<script src="../../assets/js/main.js"></script>
+
+	</body>
+</html>

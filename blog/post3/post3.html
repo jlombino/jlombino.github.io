@@ -1,0 +1,604 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Jason's Blog</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<meta name="robots" content="noindex, nofollow">
+		<link rel="stylesheet" href="../../assets/css/main.css" />
+	</head>
+	<body class="subpage">
+		<div id="page-wrapper">
+
+			<!-- Header -->
+				<section id="header">
+					<div class="container">
+						<div class="row">
+							<div class="col-12">
+
+								<!-- Logo -->
+									<h1><a href="../../index.html" id="logo">Jason Lombino</a></h1>
+
+								<!-- Nav -->
+									<nav id="nav">
+										<a href="https://github.com/jlombino/">Github Profile</a>
+										<a href="../../index.html">Home</a>
+									</nav>
+
+							</div>
+						</div>
+					</div>
+				</section>
+
+			<!-- Content -->
+				<section id="content">
+					<div class="container">
+						<div class="row">
+							<div class="col-3 col-12-medium">
+
+								<!-- Sidebar -->
+									<section>
+										<header>
+											<h2>All Posts</h2>
+										</header>
+										<ul class="link-list">
+											<li><a href="../post1/post1.html">Jason's First Blog Post<br>
+												<img src="../post1/img_preview.jpg" width="80%"></a></li>
+											<li><a href="../post2/post2.html">Jason's First Data Science Project<br>
+												<img src="../post2/img_preview.jpg" width="80%"></a></li>
+											<li><a href="../post3/post3.html">Introduction to SQL<br>
+												<img src="../post3/img_preview.jpg" width="80%"></a></li>
+										</ul>
+									</section>
+
+							</div>
+							<div class="col-9 col-12-medium imp-medium">
+
+								<!-- Main Content -->
+									<section>
+										
+										<p>
+											Welcome back! Today, I will be introducing you to SQL.
+											SQL is the most popular language used for interacting with databases - a common
+											activity in the life of a data scientist. While SQL is not too difficult to learn, it
+											is extremely powerful. The syntax resembles plain english with keywords CAPITALIZED
+											(although this is technically not necessary).<br><br>
+
+											There are many flavors of SQL such as MySQL, SQLite, and PostgreSQL. 
+											I will be working with SQLite today, using Python with the Pandas
+											and SQLite3 modules to run my queries. You should be able to follow along with your 
+											preferred implementation. Before I get to the tutorial though, here is today's Bentley picture.
+										</p>
+
+										<center><img src="img_bentley.jpg" alt="Good Boy!" width="80%"></center>
+
+										<br>
+										<p>
+											I will be using <a href="https://github.com/jlombino/dsc-phase-1-project/blob/main/zippedData/im.db.zip">data</a> 
+											from my movie analysis project for this tutorial. This dataset has not been cleaned, so you may occasionally see NaN values. This
+											is just indicative of missing data. There is no problem with the query being run, and I am not checking for
+											null values in each query to keep them short and readable.<br><br>
+
+											If you downloaded the data to follow along, please note that it is compressed. You will need to unzip it to access
+											the data inside. If you are using Python, the following code can be used to establish a connection to the database and execute a query.
+											Just enter the path to your database file and the query you want to execute.
+										
+										</p>
+
+										<pre>import pandas as pd<br>
+										import sqlite3<br>
+										connection = sqlite3.connect(*path to database*)<br>
+										df = pd.read_sql(*query*,connection)</pre>
+
+										<hr>
+										<h2>Database Structure</h2>
+										<br>
+
+										<p>
+											Databases group data into tables. Each table can contain various keys which can be thought of as
+											columns on a spreadsheet. Entries in the table can be thought of as spreadsheet rows and will have a value assigned to each key. Keys
+											can be primary or foreign. The main difference is that primary keys need to be unique such that two entries in a table 
+											can not have the same value for the primary key. The tables are often visualized in entity relationship diagrams.
+											Here is the diagram for the data I will be using today.
+										</p>
+
+										<center><img src="img_tables.jpeg" width="80%"></center>
+										
+										<p>
+											Each box in the diagram represents a table, and the rows in each box represent keys. Lines connecting two tables indicate
+											that the tables are related and have keys in common. I will be focusing on the <b>movie_basics</b> and <b>movie_ratings</b> tables for 
+											this tutorial. The movie_basics table has the following keys:
+											<ul>
+												<li><b> movie_id - Primary Key</b></li>
+												<li>primary_title</li>
+												<li>primary_title</li>
+												<li>start_year</li>
+												<li>runtime_minutes</li>
+												<li>genres</li>
+											</ul>
+										</p>
+
+										<hr>
+										<h2>The SELECT Keyword</h2>
+										<br>
+
+										<p>
+											Now that we know how our data is organized, we can start working with it. I will exclusively focus on SELECT queries 
+											today because they are used to retrieve data from a database without modifying it. I believe this is the most important query to be
+											comfortable writing as a beginner. It is also possible to modify databases with queries by using INSERT INTO, DROP, 
+											DELETE, and other keywords but I will save those for another time.
+										</p>
+
+										<hr>
+										<h2>Basic Queries</h2>
+										<br>
+
+										<p>
+											Let's start with a basic query. Here, we will extract the title, release year, and runtime for every movie
+											in the database. This information is all located in the movie_basics table so this is a simple task. We can run a query
+											with the following structure:<br>
+											<pre>SELECT [keys we want or * for all keys] FROM [table we want]</pre>
+											Or, in this case:<br>
+											<pre>SELECT primary_title, start_year, runtime_minutes FROM movie_basics</pre>
+											Here are the first five entries from the results of that query. There are about 146,000 other entries not shown here that
+											we just extracted from the database as well.
+										</p>	
+
+										<table>
+											<thead>
+											<tr style="text-align: left;">
+												<th>primary_title</th>
+												<th>start_year</th>
+												<th>runtime_minutes</th>
+											</tr>
+											</thead>
+											<tbody>
+											<tr>
+												<td>Sunghursh</td>
+												<td>2013</td>
+												<td>175.0</td>
+											</tr>
+											<tr>
+												<td>One Day Before the Rainy Season</td>
+												<td>2019</td>
+												<td>114.0</td>
+											</tr>
+											<tr>
+												<td>The Other Side of the Wind</td>
+												<td>2018</td>
+												<td>122.0</td>
+											</tr>
+											<tr>
+												<td>Sabse Bada Sukh</td>
+												<td>2018</td>
+												<td>NaN</td>
+											</tr>
+											<tr>
+												<td>The Wandering Soap Opera</td>
+												<td>2017</td>
+												<td>80.0</td>
+											</tr>
+											</tbody>
+										</table>
+
+										<hr>
+										<h2>Ordering</h2>
+										<br>
+
+										<p>
+											It is easy to order the data using a SQL query with the ORDER BY keyword. We can simply add the keyword
+											to the end of our last query followed by the key we wish to use for ordering. The default order is ascending,
+											but we can specify DESC to change this to descending. The following query returns the same results as the 
+											previous query, but with the results ordered by start year. Once again, here are the first five entries.<br>
+
+											<pre>SELECT primary_title, start_year, runtime_minutes<br>
+												FROM movie_basics<br>
+												ORDER BY start_year</pre>
+										</p>
+										<table>
+											<thead>
+											<tr style="text-align: left;">
+												<th>primary_title</th>
+												<th>start_year</th>
+												<th>runtime_minutes</th>
+											</tr>
+											</thead>
+											<tbody>
+											<tr>
+												<td>Pál Adrienn</td>
+												<td>2010</td>
+												<td>136.0</td>
+											</tr>
+											<tr>
+												<td>So Much for Justice!</td>
+												<td>2010</td>
+												<td>100.0</td>
+											</tr>
+											<tr>
+												<td>Children of the Green Dragon</td>
+												<td>2010</td>
+												<td>89.0</td>
+											</tr>
+											<tr>
+												<td>The Final Journey</td>
+												<td>2010</td>
+												<td>120.0</td>
+											</tr>
+											<tr>
+												<td>Quantum Quest: A Cassini Space Odyssey</td>
+												<td>2010</td>
+												<td>45.0</td>
+											</tr>
+											</tbody>
+										</table>
+
+										<hr>
+										<h2>Limiting Results</h2>
+										<br>
+
+										<p>
+											So far, I have been using the Pandas head method to show only the first five results from our query. We can
+											actually limit the number of results directly in the query by adding LIMIT followed by the number of results we want.
+											For example, the following query will return the first five entries in our results ordered by year.<br>
+
+											<pre>SELECT primary_title, start_year, runtime_minutes<br>
+												FROM movie_basics<br>
+												ORDER BY start_year<br>
+												LIMIT 5</pre>
+
+											The result of this query should be the exact same as the above table.
+										</p>
+
+										<hr><h2>Selecting Specific Data</h2><br>
+
+										<p>
+											It is also easy to limit which entries a query returns using the WHERE keyword. This checks whether each entry meets a specified
+											condition. For example, the following query will check whether each entry has a year less 
+											than 2015 and only return those that do. This brings us down to about 60,000 results.<br>
+											<pre>SELECT primary_title, start_year, runtime_minutes<br>
+												FROM movie_basics<br>
+												WHERE start_year < 2015</pre>
+										</p>
+
+										<table>
+											<thead>
+											<tr style="text-align: left;">
+												<th>primary_title</th>
+												<th>start_year</th>
+												<th>runtime_minutes</th>
+											</tr>
+											</thead>
+											<tbody>
+											<tr>
+												<td>Sunghursh</td>
+												<td>2013</td>
+												<td>175.0</td>
+											</tr>
+											<tr>
+												<td>O Silêncio</td>
+												<td>2012</td>
+												<td>NaN</td>
+											</tr>
+											<tr>
+												<td>Nema aviona za Zagreb</td>
+												<td>2012</td>
+												<td>82.0</td>
+											</tr>
+											<tr>
+												<td>Pál Adrienn</td>
+												<td>2010</td>
+												<td>136.0</td>
+											</tr>
+											<tr>
+												<td>So Much for Justice!</td>
+												<td>2010</td>
+												<td>100.0</td>
+											</tr>
+											</tbody>
+										</table>
+										
+										<hr> <p>
+											It is possible to have multiple conditions after the WHERE keyword by using AND or OR. 
+											The following query returns movies made before 2015 that are also longer than 120 minutes.<br>
+											<pre>SELECT primary_title, start_year, runtime_minutes<br>
+												FROM movie_basics<br>
+												WHERE start_year < 2015<br>
+												AND runtime_minutes > 120</pre>
+										</p>
+
+										<table>
+											<thead>
+											<tr style="text-align: left;">
+												<th>primary_title</th>
+												<th>start_year</th>
+												<th>runtime_minutes</th>
+											</tr>
+											</thead>
+											<tbody>
+											<tr>
+												<td>Sunghursh</td>
+												<td>2013</td>
+												<td>175.0</td>
+											</tr>
+											<tr>
+												<td>Pál Adrienn</td>
+												<td>2010</td>
+												<td>136.0</td>
+											</tr>
+											<tr>
+												<td>Cooper and Hemingway: The True Gen</td>
+												<td>2013</td>
+												<td>180.0</td>
+											</tr>
+											<tr>
+												<td>Az ember tragédiája</td>
+												<td>2011</td>
+												<td>160.0</td>
+											</tr>
+											<tr>
+												<td>On the Road</td>
+												<td>2012</td>
+												<td>124.0</td>
+											</tr>
+											</tbody>
+										</table>
+
+										<hr>
+										<h2>A Quick Pause</h2>
+										<br>
+										<p>
+											This blog is packed with information, and learning a new language is always difficult. Take a minute to grab some coffee or tea,
+											or just let your brain digest everything we have gone over so far. I will still be here when you're ready to continue.
+										</p>
+
+										<center><img src="img_stop.jpg" width="80%"></center><br>
+										
+										<hr><h2>Grouping and Aggregate Functions</h2><br>
+
+										<p>
+											SQL makes it easy to gain insight into our data using aggregate functions. Some examples are COUNT, SUM, AVG,
+											MIN, and MAX. When using these functions, we typically also use GROUP BY to split the data into groups. 
+											For example, we can calculate the number of movies in each year with the following query.<br>
+
+											<pre>SELECT start_year, COUNT()<br>
+												FROM movie_basics<br>
+												GROUP BY start_year</pre>
+
+											COUNT( ) goes after the SELECT keyword and will count the number of movies in each of the start_year groups 
+											we made using GROUP BY. Here are the first five results.
+										</p>
+
+										<table>
+											<thead>
+											<tr style="text-align: left;">
+												<th>start_year</th>
+												<th>COUNT()</th>
+											</tr>
+											</thead>
+											<tbody>
+											<tr>
+												<td>2010</td>
+												<td>11849</td>
+											</tr>
+											<tr>
+												<td>2011</td>
+												<td>12900</td>
+											</tr>
+											<tr>
+												<td>2012</td>
+												<td>13787</td>
+											</tr>
+											<tr>
+												<td>2013</td>
+												<td>14709</td>
+											</tr>
+											<tr>
+												<td>2014</td>
+												<td>15589</td>
+											</tr>
+											</tbody>
+										</table>
+										
+										<p>
+											It is even possible to combine the WHERE keyword with GROUP BY and aggregate functions.
+											For example, we can limit the previous query to only include movies longer than 120 minutes.
+											We can use the WHERE keyword before GROUP BY to include only the relevant movies.<br>
+
+											<pre>SELECT start_year, COUNT()<br>
+												FROM movie_basics<br>
+												WHERE runtime_minutes > 120<br>
+												GROUP BY start_year</pre>
+										</p>
+
+										<table>
+											<thead>
+											<tr style="text-align: left;">
+												<th>start_year</th>
+												<th>COUNT()</th>
+											</tr>
+											</thead>
+											<tbody>
+											<tr>
+												<td>2010</td>
+												<td>682</td>
+											</tr>
+											<tr>
+												<td>2011</td>
+												<td>718</td>
+											</tr>
+											<tr>
+												<td>2012</td>
+												<td>773</td>
+											</tr>
+											<tr>
+												<td>2013</td>
+												<td>882</td>
+											</tr>
+											<tr>
+												<td>2014</td>
+												<td>984</td>
+											</tr>
+											</tbody>
+										</table>
+										
+										<hr><h2>Joining Tables</h2><br>
+
+										<p>
+											So far, we have only used data from the movie_basics table. This does not need to be the case though.
+											SQL makes it easy to join tables together allowing you to use information from any or all of them. Tables
+											can be joined on shared keys using the JOIN and ON keywords. There are four important types of joins.
+											<ul>
+												<li>Inner join keeps data with values present in <b>both</b> tables.</li>
+												<li>Outer join keeps data with values present in <b>either</b> table.</li>
+												<li>Left join keeps data with values present in the <b>first</b> table.</li>
+												<li>Right join keeps data with values present in the <b>second</b> table.</li>
+											</ul>
+											The following example will utilize an inner join which only keeps entries that have values in both tables.
+											Using a different type of join can result in many null values in your results. The correct join to use
+											depends mostly on your data and what you are trying to accomplish; there is no universally best join.<br><br>
+
+											Now we would like our results to include the averate rating for each movie. This data is located on the movie_ratings 
+											table, so we will need to join that with the movie_basics table where the rest of our data is located. This complicates
+											things because we need to precede our key names with table names to avoid ambiguity. We also need a shared key between the tables
+											(in this case movie_id) to join them on. The following query joins the two relevant tables and extracts the information
+											from the relevant keys of each table.<br>
+
+											<pre>SELECT movie_basics.primary_title,<br>
+											movie_basics.start_year,<br>
+											movie_ratings.averagerating<br>
+											FROM movie_basics<br>
+											INNER JOIN movie_ratings<br>
+											ON movie_basics.movie_id = movie_ratings.movie_id</pre>
+										</p>
+
+										<table>
+											<thead>
+											<tr style="text-align: left;">
+												<th>primary_title</th>
+												<th>start_year</th>
+												<th>averagerating</th>
+											</tr>
+											</thead>
+											<tbody>
+											<tr>
+												<td>Sunghursh</td>
+												<td>2013</td>
+												<td>7.0</td>
+											</tr>
+											<tr>
+												<td>One Day Before the Rainy Season</td>
+												<td>2019</td>
+												<td>7.2</td>
+											</tr>
+											<tr>
+												<td>The Other Side of the Wind</td>
+												<td>2018</td>
+												<td>6.9</td>
+											</tr>
+											<tr>
+												<td>Sabse Bada Sukh</td>
+												<td>2018</td>
+												<td>6.1</td>
+											</tr>
+											<tr>
+												<td>The Wandering Soap Opera</td>
+												<td>2017</td>
+												<td>6.5</td>
+											</tr>
+											</tbody>
+										</table>
+
+										<hr>
+										<h2>Putting it All Together</h2
+											><br>
+
+										<p>
+											Unsurprisingly, you can use GROUP BY and aggregate functions even when joining several tables.
+											We can now find the average rating of movies released each year similarly to how we found the number 
+											of movies released each year above. We just use the AVG function instead of COUNT, and precede 
+											each of our keys with the table they are from to avoid ambiguity. The following query accomplishes
+											this task.<br>
+											<pre>
+												SELECT movie_basics.start_year,<br>
+												AVG(movie_ratings.averagerating)<br>
+												FROM movie_basics<br>
+												INNER JOIN movie_ratings<br>
+												ON movie_basics.movie_id = movie_ratings.movie_id<br>
+												GROUP BY movie_basics.start_year
+											</pre>
+										</p>
+
+										<table>
+											<thead>
+											<tr>
+												<th>start_year</th>
+												<th>AVG(movie_ratings.averagerating)</th>
+											</tr>
+											</thead>
+											<tbody>
+											<tr>
+												<td>2010</td>
+												<td>6.259585</td>
+											</tr>
+											<tr>
+												<td>2011</td>
+												<td>6.290134</td>
+											</tr>
+											<tr>
+												<td>2012</td>
+												<td>6.297057</td>
+											</tr>
+											<tr>
+												<td>2013</td>
+												<td>6.287259</td>
+											</tr>
+											<tr>
+												<td>2014</td>
+												<td>6.319806</td>
+											</tr>
+											</tbody>
+										</table>
+
+										<hr>
+										<h2>The End!</h2>
+										<br>
+										
+										<p>
+											I hope this tutorial has proved helpful to you. SQL will be very useful to you
+											if you are interested in a career in data science or data analytics. As I mentioned before, this tutorial is
+											by no means comprehensive; it only covers very simple SELECT queries. There are many more things you can do with
+											SQL including but not limited to:
+											<ul>
+												<li>Drop or impute missing data</li>
+												<li>Create and update database records and tables</li>
+												<li>Further filter results using nested queries</li>
+
+											</ul>
+											
+											If you are looking for more information, you should definitely check out the 
+											<a href="https://www.sqlite.org/keyword_index.html">SQLite Documentation</a>.
+										</p>
+										
+									</section>
+
+							</div>
+						</div>
+					</div>
+				</section>
+
+			<!-- Copyright -->
+				<div id="copyright">
+					&copy; Untitled. All rights reserved. | Design: <a href="http://html5up.net">HTML5 UP</a>
+				</div>
+
+		</div>
+
+		<!-- Scripts -->
+			<script src="../../assets/js/jquery.min.js"></script>
+			<script src="../../assets/js/browser.min.js"></script>
+			<script src="../../assets/js/breakpoints.min.js"></script>
+			<script src="../../assets/js/util.js"></script>
+			<script src="../../assets/js/main.js"></script>
+
+	</body>
+</html>
